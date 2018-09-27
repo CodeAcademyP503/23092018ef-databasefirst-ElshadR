@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DepoziteDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Credities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Person_Id" Type="int" />
+          <Property Name="DateOfCredit" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="90" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DepoziteDb.dbo.AllPeople' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllPeople">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DepoziteDb.dbo.usp_AllPerson' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="usp_AllPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="90" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DepoziteDb.dbo.uv_all' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="uv_all">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Surname" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="90" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Credities__Perso__286302EC">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="Credities" Type="Self.Credities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Credities">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DepoziteDbModelStoreContainer">
+          <EntitySet Name="Credities" EntityType="Self.Credities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AllPeople" EntityType="Self.AllPeople" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllPeople].[Id] AS [Id], 
+    [AllPeople].[Name] AS [Name]
+    FROM [dbo].[AllPeople] AS [AllPeople]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="usp_AllPerson" EntityType="Self.usp_AllPerson" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [usp_AllPerson].[Id] AS [Id], 
+    [usp_AllPerson].[name] AS [name], 
+    [usp_AllPerson].[Total] AS [Total]
+    FROM [dbo].[usp_AllPerson] AS [usp_AllPerson]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="uv_all" EntityType="Self.uv_all" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [uv_all].[Id] AS [Id], 
+    [uv_all].[Name] AS [Name], 
+    [uv_all].[Surname] AS [Surname]
+    FROM [dbo].[uv_all] AS [uv_all]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Credities__Perso__286302EC" Association="Self.FK__Credities__Perso__286302EC">
+            <End Role="People" EntitySet="People" />
+            <End Role="Credities" EntitySet="Credities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DepoziteDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Credity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Person_Id" Type="Int32" />
+          <Property Name="DateOfCredit" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Credities__Perso__286302EC" FromRole="Credities" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Credities" Relationship="Self.FK__Credities__Perso__286302EC" FromRole="People" ToRole="Credities" />
+        </EntityType>
+        <EntityType Name="AllPeople">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usp_AllPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="uv_all">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Surname" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Credities__Perso__286302EC">
+          <End Role="People" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="Credities" Type="Self.Credity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Credities">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DepoziteDbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Credities" EntityType="Self.Credity" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="AllPeoples" EntityType="Self.AllPeople" />
+          <EntitySet Name="usp_AllPerson" EntityType="Self.usp_AllPerson" />
+          <EntitySet Name="uv_all" EntityType="Self.uv_all" />
+          <AssociationSet Name="FK__Credities__Perso__286302EC" Association="Self.FK__Credities__Perso__286302EC">
+            <End Role="People" EntitySet="People" />
+            <End Role="Credities" EntitySet="Credities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DepoziteDbModelStoreContainer" CdmEntityContainer="DepoziteDbEntities1">
+          <EntitySetMapping Name="Credities">
+            <EntityTypeMapping TypeName="DepoziteDbModel.Credity">
+              <MappingFragment StoreEntitySet="Credities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+                <ScalarProperty Name="DateOfCredit" ColumnName="DateOfCredit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="DepoziteDbModel.Person">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllPeoples">
+            <EntityTypeMapping TypeName="DepoziteDbModel.AllPeople">
+              <MappingFragment StoreEntitySet="AllPeople">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usp_AllPerson">
+            <EntityTypeMapping TypeName="DepoziteDbModel.usp_AllPerson">
+              <MappingFragment StoreEntitySet="usp_AllPerson">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uv_all">
+            <EntityTypeMapping TypeName="DepoziteDbModel.uv_all">
+              <MappingFragment StoreEntitySet="uv_all">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
